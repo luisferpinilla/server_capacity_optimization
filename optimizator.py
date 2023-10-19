@@ -7,8 +7,6 @@ def lp_model_solver(instance_conf:pd.DataFrame, work_demand:pd.DataFrame)->pd.Da
 
     periods = list(work_demand.index)
 
-    print(instance_conf.columns)
-
     instances = list(instance_conf['Instance Type'])
 
     # parameters:
@@ -44,7 +42,7 @@ def lp_model_solver(instance_conf:pd.DataFrame, work_demand:pd.DataFrame)->pd.Da
         for period in periods:
             # if inicial period then use S (initial amount)
             if period == 0:
-                model += (X[instance][period]==S[instance], f'inventory balance {instance} in {period}')
+                model += (X[instance][period]==S[instance] + I[instance][period], f'inventory balance {instance} in {period}')
             else:
                 model += (X[instance][period]==X[instance][period-1] + I[instance][period],f'inventory balance {instance} in {period}')
 

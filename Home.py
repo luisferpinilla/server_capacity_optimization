@@ -39,7 +39,7 @@ if not 'instance_df' in st.session_state:
 
             for t in range(period_of_time):
                 data2_dict['period'].append(t)
-                data2_dict['required capacity'].append(np.random.random_integers(low=1,high=5))
+                data2_dict['required capacity'].append(np.random.randint(low=1,high=5))
 
             period_of_time_df = pd.DataFrame(data2_dict)
 

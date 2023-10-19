@@ -1,5 +1,6 @@
 import pandas as pd
 import pulp as pu
+import numpy as np
 
 def lp_model_solver(instance_conf:pd.DataFrame, work_demand:pd.DataFrame)->pd.DataFrame:
 
@@ -60,8 +61,42 @@ def lp_model_solver(instance_conf:pd.DataFrame, work_demand:pd.DataFrame)->pd.Da
     # solve model
     model.solve()
 
-    model.writeLP(filename='model.lp')
+    # model.writeLP(filename='model.lp')
 
-    return instance_conf
+    # Build report
+    df_dict = dict()
+
+    df_dict['Period'] = list()
+    df_dict['Instance Type'] = list()
+    df_dict['Instances'] = list()
+
+    for period in periods:
+        for instance in instances:
+            df_dict['Period'].append(period)
+            df_dict['Instance Type'].append(instance)
+            df_dict['Instances'].append(X[instance][period].varValue)
+
+    df = pd.DataFrame(df_dict)    
+    
+
+    df = df.pivot_table(values='Instances',
+                        index=['Instance Type'],
+                        columns='Period',
+                        aggfunc=np.sum)
+    
+    df['Total Instance Type'] = df.apply(np.sum,axis=1)
+
+    df.reset_index(inplace=True)
+
+    df['Instance Capacity'] = df['Instance Type'].map(W)
+
+    df['Total Required Capacity'] = df['Total Instance Type']*df['Instance Capacity']
+
+    df['Instance Cost'] = df['Instance Type'].map(C).astype(float)
+
+    df['Total Cost'] = df['Total Instance Type']*df['Instance Cost']
+   
+    df.set_index('Instance Type', inplace=True, drop=True)
+    return df
 
 

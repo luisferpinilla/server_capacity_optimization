@@ -25,8 +25,8 @@ if not 'instance_df' in st.session_state:
 
             for i in range(instance_amount):
                 data_dict['Instance Type'].append(f'InstanceType{i}')
-                data_dict['Instance Capacity'].append(i*0.23)
-                data_dict['Instance Cost'].append(i*1.12)
+                data_dict['Instance Capacity'].append(i*1.23+0.4)
+                data_dict['Instance Cost'].append(i*1.12+0.3)
                 data_dict['Initial active quantity'].append(0)
 
             df = pd.DataFrame(data_dict)
@@ -73,7 +73,9 @@ else:
 
             result_df = lp_model_solver(instance_conf=edited_instance_type_df, work_demand=edited_demand_df)
 
-            st.markdown('# Reults:')
+            st.markdown('# Results:')
             st.markdown('This is the suggested scheduled capacity:')
 
-            st.write(result_df)   
+            st.write(result_df)  
+
+            st.write(f"The planned total cost is = {round(result_df['Total Cost'].sum(),ndigits=3)}") 

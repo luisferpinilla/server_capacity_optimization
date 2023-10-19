@@ -90,7 +90,7 @@ def lp_model_solver(instance_conf:pd.DataFrame, work_demand:pd.DataFrame)->pd.Da
 
     df['Instance Capacity'] = df['Instance Type'].map(W)
 
-    df['Total Required Capacity'] = df['Total Instance Type']*df['Instance Capacity']
+    df['Total Capacity'] = df['Total Instance Type']*df['Instance Capacity']
 
     df['Instance Cost'] = df['Instance Type'].map(C).astype(float)
 

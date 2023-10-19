@@ -26,7 +26,7 @@ if not 'instance_df' in st.session_state:
             for i in range(instance_amount):
                 data_dict['Instance Type'].append(f'InstanceType{i}')
                 data_dict['Instance Capacity'].append(i*1.23+0.4)
-                data_dict['Instance Cost'].append(i*1.12+0.3)
+                data_dict['Instance Cost'].append(i*0.8+0.3)
                 data_dict['Initial active quantity'].append(0)
 
             df = pd.DataFrame(data_dict)

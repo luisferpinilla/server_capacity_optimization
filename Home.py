@@ -4,7 +4,7 @@ import numpy as np
 from optimizator import lp_model_solver
 
 st.header('Server Capacity Optimization')
-st.subheader('A simple linear programing model to solve a problem capacity')
+st.subheader('A simple linear programming model to solve a problem capacity')
 
 if not 'instance_df' in st.session_state:
 

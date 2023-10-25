@@ -3,7 +3,10 @@ import pandas as pd
 import numpy as np
 from optimizator import lp_model_solver
 
+st.set_page_config(layout='wide')
+
 st.header('Server Capacity Optimization')
+
 st.subheader('A simple linear programming model to solve a problem capacity')
 
 if not 'instance_df' in st.session_state:
